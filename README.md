@@ -26,3 +26,12 @@
 More about Sliding Window Algorithm:
 - https://www.youtube.com/watch?v=p-ss2JNynmw&ab_channel=Insidecode
 - https://www.freecodecamp.org/news/sliding-window-technique/
+
+
+> <h3> 4. Find Median Sorted Arrays </h3>
+
+- The overall run time complexity should be O(log (m+n))
+
+![Captura de tela de 2024-04-27 17-12-58](https://github.com/carologata/Algorithms-and-Data-Structures/assets/105884639/018d27f4-8617-4c6c-848c-11955c50aa8a)
+
+
