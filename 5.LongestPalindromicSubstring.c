@@ -1,52 +1,67 @@
-#include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
-char *checkIfIsLongestPalindromic(char *s, int i, int j, char *current)
+bool check_if_palindromic(char *str)
 {
-    char *new;
-    int size;
-    int string_size;
-
-    string_size = j;
-    while(i < string_size + 1)
-    {
-        if(s[i] != s[j])
-            return (current);
-        i++;
-        j--;  
-    }
-    size = j - i + 2;
-    new = calloc(size, sizeof(char));
-    strncpy(new, &s[i], size - 1);
-    return (new);
-}
-
-char* longestPalindrome(char* s) {
-    
+    int len;
+    int half;
     int i;
     int j;
-    char *longestPalindromicString;
+
+    len = strlen(str);
+    half = len/2;
+    i = 0;
+    j = len - 1;
+    while(i < half)
+    {
+        if(str[i] != str[j])
+            return (false);
+        i++;
+        j--;
+    }
+    return (true);
+}
+
+char* longestPalindrome(char* s) 
+{
+    
+    char *new;
+    char *longest_palindromic;
+    int i;
+    int j;
+    int new_len;
+    int palindromic_len;
 
     i = 0;
-    longestPalindromicString = calloc(2, sizeof(char));
-    longestPalindromicString[0] = s[i];
-    longestPalindromicString[1] = '\0';
+    palindromic_len = 0;
+    new_len = 0;
+    longest_palindromic = NULL;
     while(s[i])
     {
-        j = i + 1;
+        j = i;
         while(s[j])
         {
-            longestPalindromicString = checkIfIsLongestPalindromic(s, i, j, longestPalindromicString);
+            new = strndup(&s[i], j - i + 1);
+            new_len = strlen(new);
+            if(check_if_palindromic(new) && new_len > palindromic_len)
+            {
+                longest_palindromic = new;
+                palindromic_len = strlen(longest_palindromic);
+            }
+            else
+                free(new);
             j++;
         }
         i++;
     }
-    return (longestPalindromicString);
+    return (longest_palindromic);
 }
 
-int main(void)
+/* int main(void)
 {
-    char *s;
+    char *longest_palindrome;
+    char *str = "babad";
 
-    s = longestPalindrome("babad");
-}
+    longest_palindrome = longestPalindrome(str);
+} */
