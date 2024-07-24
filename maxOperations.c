@@ -1,73 +1,52 @@
+#include <stdlib.h>
 
-void remove_number(int *nums, int valueI, int valueJ, int *numsSize)
+int compare(void *value1, void *value2)
 {
-    int curr_index;
-    int new_index;
-    int countI;
-    int countJ;
+    int valueInt1;
+    int valueInt2;
 
-    curr_index = 0;
-    new_index = 0;
-    countI = 1;
-    countJ = 1;
-    while(curr_index < *numsSize)
-    {
-        if(nums[curr_index] == valueI && countI)
-            countI--;
-        else if(nums[curr_index] == valueJ && countJ)
-            countJ--;
-        else
-        {
-            nums[new_index] = nums[curr_index]; 
-            new_index++;
-        }   
-        curr_index++;
-    }
-    *numsSize = *numsSize - 2;
+    valueInt1 = *((int *)value1);
+    valueInt2 = *((int *)value2);
+
+    return (valueInt1 - valueInt2);
 }
 
-int maxOperations(int* nums, int numsSize, int k)
-{
+int maxOperations(int* nums, int numsSize, int k){
 
-    int i;
-    int j;
-    int element;
+    int start;
+    int end;
+    int sum;
     int operations;
 
-    i = 0;
-    element = 0;
+    qsort(nums, numsSize, sizeof(int), compare);
+
+    start = 0;
+    end = numsSize - 1;
+
+    sum = 0;
     operations = 0;
-    while(i < numsSize)
+    while(start < end)
     {
-        element = k - nums[i];
-        j = i + 1;
-        while(j < numsSize)
+        sum = nums[start] + nums[end];
+        if(sum == k)
         {
-            if(nums[j] == element)
-            {
-                remove_number(nums, nums[i], nums[j], &numsSize);
-                operations++;
-                i = -1;
-                break ;
-            }
-            j++;
+            start++;
+            end--;
+            operations++;
         }
-        i++;
+        else if(sum < k)
+            start++;
+        else
+            end--;
     }
     return (operations);
 }
 
-#include <stdlib.h>
-
-int main(void)
+/* int main(void)
 {
-    int *nums = malloc(5 * sizeof(int));
-    nums[0] = 3;
-    nums[1] = 1;
-    nums[2] = 3,
-    nums[3] = 4;
-    nums[4] = 3; 
-    int k = 6;
+    int nums[] = {4,4,1,3,1,3,2,2,5,5,1,5,2,1,2,3,5,4};
 
-    maxOperations(nums, 5, k);
-}
+    int k = 2;
+
+    maxOperations(nums, 18, k);
+} */
